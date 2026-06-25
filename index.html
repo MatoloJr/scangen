@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D0D0F">
+<meta name="description" content="ScanGen — Scan and generate QR codes, Code128, EAN-13, EAN-8, and Code39 barcodes directly in your browser.">
 <title>ScanGen — Barcode & QR Tool</title>
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
@@ -17,56 +22,56 @@
   <div class="logo">
     <div class="logo-icon">
       <div class="logo-bars">
-        <span style="height:6px"></span>
+        <span style="height:5px"></span>
+        <span style="height:13px"></span>
+        <span style="height:9px"></span>
         <span style="height:14px"></span>
-        <span style="height:10px"></span>
-        <span style="height:16px"></span>
-        <span style="height:8px"></span>
-        <span style="height:14px"></span>
+        <span style="height:7px"></span>
+        <span style="height:12px"></span>
       </div>
     </div>
     <span class="logo-name">SCAN<em>GEN</em></span>
   </div>
-  <span class="header-badge">v1.0 — offline ready</span>
+  <span class="header-badge">v1.1 — offline ready</span>
 </header>
 
-<nav class="tabs">
-  <button class="tab-btn active" onclick="switchTab('scan', this)">
-    <span class="tab-dot"></span> SCAN
+<nav class="tabs" role="tablist" aria-label="Main navigation">
+  <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-scan" onclick="switchTab('scan', this)">
+    <span class="tab-dot" aria-hidden="true"></span> SCAN
   </button>
-  <button class="tab-btn" onclick="switchTab('generate', this)">
-    <span class="tab-dot"></span> GENERATE
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-generate" onclick="switchTab('generate', this)">
+    <span class="tab-dot" aria-hidden="true"></span> GENERATE
   </button>
 </nav>
 
 <main class="main">
 
   <!-- =================== SCAN =================== -->
-  <div id="tab-scan" class="tab-panel active">
+  <div id="tab-scan" class="tab-panel active" role="tabpanel">
 
     <p class="section-label">choose input method</p>
     <div class="scan-methods">
-      <button class="scan-method-btn active" id="method-camera" onclick="setMethod('camera')">
-        <span class="method-icon">📷</span>Live Camera
+      <button class="scan-method-btn active" id="method-camera" onclick="setMethod('camera')" aria-label="Live camera scan">
+        <span class="method-icon" aria-hidden="true">📷</span>Live Camera
       </button>
-      <button class="scan-method-btn" id="method-upload" onclick="setMethod('upload')">
-        <span class="method-icon">🖼</span>Upload Image
+      <button class="scan-method-btn" id="method-upload" onclick="setMethod('upload')" aria-label="Upload image to scan">
+        <span class="method-icon" aria-hidden="true">🖼</span>Upload Image
       </button>
-      <button class="scan-method-btn" id="method-paste" onclick="setMethod('paste')">
-        <span class="method-icon">📋</span>Paste / URL
+      <button class="scan-method-btn" id="method-paste" onclick="setMethod('paste')" aria-label="Paste image or URL to scan">
+        <span class="method-icon" aria-hidden="true">📋</span>Paste / URL
       </button>
     </div>
 
     <!-- CAMERA -->
     <div id="panel-camera" class="card">
       <div class="card-title">
-        <span class="status-dot" id="camera-status-dot"></span>
+        <span class="status-dot" id="camera-status-dot" aria-hidden="true"></span>
         <span id="camera-status-text">camera idle</span>
       </div>
       <div class="camera-container" id="cam-wrap">
-        <div id="camera-viewport"></div>
-        <div class="scan-beam" id="scan-beam" style="display:none"></div>
-        <div class="scan-corners" style="display:none" id="scan-corners"><span></span></div>
+        <div id="camera-viewport" aria-label="Camera viewfinder"></div>
+        <div class="scan-beam" id="scan-beam" style="display:none" aria-hidden="true"></div>
+        <div class="scan-corners" style="display:none" id="scan-corners" aria-hidden="true"><span></span></div>
       </div>
       <div class="btn-group">
         <button class="btn btn-primary" id="btn-start-cam" onclick="startCamera()">▶ Start Scanner</button>
@@ -78,12 +83,18 @@
     <div id="panel-upload" style="display:none">
       <div class="card">
         <div class="card-title">upload an image</div>
-        <div class="drop-zone" id="drop-zone">
-          <span class="drop-icon">⬆</span>
-          Drop image here or click to browse
-          <input type="file" accept="image/*" id="upload-file-input" onchange="handleFileUpload(event)">
+        <img id="upload-preview" class="scanned-preview" alt="Uploaded image preview">
+        <div class="scan-loading" id="upload-loading">
+          <div class="spinner" aria-hidden="true"></div>
+          SCANNING IMAGE...
         </div>
-        <p id="upload-error" class="error-msg"></p>
+        <div class="drop-zone" id="drop-zone">
+          <span class="drop-icon" aria-hidden="true">⬆</span>
+          Drop image here or click to browse
+          <span class="drop-sub">PNG, JPG, WEBP, GIF supported</span>
+          <input type="file" accept="image/*" id="upload-file-input" onchange="handleFileUpload(event)" aria-label="Choose image file">
+        </div>
+        <p id="upload-error" class="error-msg" role="alert"></p>
       </div>
     </div>
 
@@ -91,22 +102,36 @@
     <div id="panel-paste" style="display:none">
       <div class="card">
         <div class="card-title">paste image or enter URL</div>
+        <div class="scan-loading" id="paste-loading">
+          <div class="spinner" aria-hidden="true"></div>
+          SCANNING IMAGE...
+        </div>
         <div class="paste-area" id="paste-area" tabindex="0">
-          <textarea id="paste-url-input" placeholder="Paste an image URL here, then click Scan..." rows="3"></textarea>
-          <div class="btn-group">
+          <div class="form-group">
+            <label class="form-label" for="paste-url-input">IMAGE URL</label>
+            <textarea id="paste-url-input" placeholder="https://example.com/barcode.png" rows="2"></textarea>
+          </div>
+          <div class="btn-group" style="margin-top:0.5rem">
             <button class="btn btn-primary" onclick="scanFromURL()">🔍 Scan URL</button>
           </div>
-          <p class="paste-hint">Or press <kbd>Ctrl</kbd> + <kbd>V</kbd> in this area to paste an image from clipboard</p>
+          <p class="paste-hint">
+            Or press <kbd>Ctrl</kbd>+<kbd>V</kbd> (or <kbd>⌘V</kbd>) anywhere in this box to paste a copied image directly from your clipboard.
+          </p>
         </div>
-        <p id="paste-error" class="error-msg"></p>
+        <p id="paste-error" class="error-msg" role="alert"></p>
       </div>
     </div>
 
     <!-- RESULT -->
-    <div class="result-box" id="scan-result">
+    <div class="result-box" id="scan-result" role="region" aria-label="Scan result" aria-live="polite">
       <p class="result-label">DECODED RESULT</p>
+      <div id="result-type-badge"></div>
       <p class="result-value" id="result-value">—</p>
       <p class="result-meta">Format: <span id="result-format">—</span></p>
+      <div class="result-interpreted" id="result-interpreted" style="display:none">
+        <p class="result-interpreted-label">DECODED INFORMATION</p>
+        <div class="result-interpreted-grid" id="result-interpreted-grid"></div>
+      </div>
       <div class="btn-group">
         <button class="btn btn-ghost" onclick="copyResult()">📋 Copy Value</button>
         <button class="btn btn-ghost" onclick="openResultLink()" id="btn-open-link" style="display:none">🔗 Open Link</button>
@@ -117,10 +142,10 @@
   </div>
 
   <!-- =================== GENERATE =================== -->
-  <div id="tab-generate" class="tab-panel">
+  <div id="tab-generate" class="tab-panel" role="tabpanel">
 
     <p class="section-label">select format</p>
-    <div class="format-pills">
+    <div class="format-pills" role="group" aria-label="Barcode format selection">
       <button class="format-pill active" data-fmt="QR" onclick="setFormat('QR', this)">QR Code</button>
       <button class="format-pill" data-fmt="CODE128" onclick="setFormat('CODE128', this)">Code128</button>
       <button class="format-pill" data-fmt="EAN13" onclick="setFormat('EAN13', this)">EAN-13</button>
@@ -135,14 +160,14 @@
         <label class="form-label" for="gen-input">CONTENT</label>
         <textarea id="gen-input" placeholder="Type or paste your data here..." rows="3"
           oninput="onInputChange()"></textarea>
-        <p id="gen-hint" style="font-family:monospace;font-size:0.7rem;color:var(--text-muted);margin-top:0.4rem"></p>
+        <p id="gen-hint" class="form-label" style="margin-top:0.4rem;letter-spacing:0.06em;opacity:0.8"></p>
       </div>
 
       <!-- QR options -->
       <div id="qr-options">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">ERROR CORRECTION</label>
+            <label class="form-label" for="qr-ecl">ERROR CORRECTION</label>
             <select id="qr-ecl" onchange="onInputChange()">
               <option value="L">L — Low (7%)</option>
               <option value="M" selected>M — Medium (15%)</option>
@@ -151,9 +176,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">SIZE (px)</label>
+            <label class="form-label" for="qr-size">SIZE</label>
             <div class="size-control">
-              <input type="range" min="128" max="512" step="16" value="256" id="qr-size" oninput="document.getElementById('qr-size-val').textContent=this.value+'px';onInputChange()">
+              <input type="range" min="128" max="512" step="16" value="256" id="qr-size"
+                aria-label="QR code size"
+                oninput="document.getElementById('qr-size-val').textContent=this.value+'px';onInputChange()">
               <span class="size-val" id="qr-size-val">256px</span>
             </div>
           </div>
@@ -164,16 +191,20 @@
       <div id="barcode-options" style="display:none">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">WIDTH (bar width)</label>
+            <label class="form-label" for="bc-width">BAR WIDTH</label>
             <div class="size-control">
-              <input type="range" min="1" max="4" step="0.5" value="2" id="bc-width" oninput="document.getElementById('bc-width-val').textContent=this.value;onInputChange()">
+              <input type="range" min="1" max="4" step="0.5" value="2" id="bc-width"
+                aria-label="Bar width"
+                oninput="document.getElementById('bc-width-val').textContent=this.value;onInputChange()">
               <span class="size-val" id="bc-width-val">2</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">HEIGHT (px)</label>
+            <label class="form-label" for="bc-height">HEIGHT</label>
             <div class="size-control">
-              <input type="range" min="40" max="200" step="10" value="100" id="bc-height" oninput="document.getElementById('bc-height-val').textContent=this.value+'px';onInputChange()">
+              <input type="range" min="40" max="200" step="10" value="100" id="bc-height"
+                aria-label="Barcode height"
+                oninput="document.getElementById('bc-height-val').textContent=this.value+'px';onInputChange()">
               <span class="size-val" id="bc-height-val">100px</span>
             </div>
           </div>
@@ -189,17 +220,17 @@
     <!-- Output -->
     <div class="card">
       <div class="card-title">output</div>
-      <div class="output-area" id="output-area">
+      <div class="output-area" id="output-area" aria-live="polite">
         <div class="output-placeholder" id="output-placeholder">
-          <span>▦</span>
+          <span aria-hidden="true">▦</span>
           <p>Generate a code to see output here</p>
         </div>
         <div id="qr-output" style="display:none"></div>
-        <div id="barcode-output-bg">
-          <svg id="barcode-output"></svg>
+        <div id="barcode-output-bg" style="display:none">
+          <svg id="barcode-output" aria-label="Generated barcode"></svg>
         </div>
       </div>
-      <p id="gen-error" class="error-msg" style="margin-top:0.5rem"></p>
+      <p id="gen-error" class="error-msg" role="alert" style="margin-top:0.5rem"></p>
       <div class="btn-group" id="output-actions" style="display:none">
         <button class="btn btn-primary" onclick="downloadCode()">⬇ Download PNG</button>
         <button class="btn btn-ghost" onclick="copyCodeImage()">📋 Copy Image</button>
@@ -209,8 +240,8 @@
   </div>
 </main>
 
-<div class="toast" id="toast"></div>
-<input type="file" id="upload-input" accept="image/*">
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="upload-input" accept="image/*" aria-hidden="true">
 
 <script src="script.js"></script>
 </body>
