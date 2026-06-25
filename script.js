@@ -1,6 +1,4 @@
-// ─────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────
+//STATE
 let currentFormat = 'QR';
 let currentMethod = 'camera';
 let html5Scanner = null;
@@ -8,9 +6,7 @@ let isCameraActive = false;
 let lastResult = null;
 let generateDebounce = null;
 
-// ─────────────────────────────────────────────
-// TAB SWITCHING
-// ─────────────────────────────────────────────
+//TAB SWITCHING
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => {
@@ -23,9 +19,7 @@ function switchTab(tab, btn) {
   if (tab !== 'scan') stopCamera();
 }
 
-// ─────────────────────────────────────────────
-// TOAST
-// ─────────────────────────────────────────────
+//TOAST
 let toastTimer = null;
 function toast(msg, dur = 2400) {
   const t = document.getElementById('toast');
@@ -35,9 +29,7 @@ function toast(msg, dur = 2400) {
   toastTimer = setTimeout(() => t.classList.remove('show'), dur);
 }
 
-// ─────────────────────────────────────────────
-// GENERATE — Format selection
-// ─────────────────────────────────────────────
+//GENERATE Format selection
 function setFormat(fmt, el) {
   currentFormat = fmt;
   document.querySelectorAll('.format-pill').forEach(p => p.classList.remove('active'));
@@ -54,7 +46,7 @@ function updateHint() {
     CODE128: 'Alphanumeric + special chars, variable length. Used in logistics & shipping.',
     EAN13:   'Exactly 12 or 13 digits. The standard retail product barcode worldwide.',
     EAN8:    'Exactly 7 or 8 digits. A short retail barcode for small packages.',
-    CODE39:  'Uppercase A–Z, digits 0–9, and the characters: - . $ / + % SPACE'
+    CODE39:  'Uppercase A–Z, digits 0–9 and the characters: - . $ / + % SPACE'
   };
   document.getElementById('gen-hint').textContent = hints[currentFormat] || '';
 }
@@ -70,9 +62,7 @@ function onInputChange() {
 
 updateHint();
 
-// ─────────────────────────────────────────────
-// GENERATE — Core
-// ─────────────────────────────────────────────
+//GENERATE Core
 function generate() {
   const input = document.getElementById('gen-input').value.trim();
   const errEl = document.getElementById('gen-error');
@@ -90,7 +80,7 @@ function generate() {
   if (currentFormat === 'CODE39') {
     const code39Valid = /^[A-Z0-9\-\.\s\$\/\+\%]+$/i;
     if (!code39Valid.test(input)) {
-      errEl.textContent = 'Code39: use A–Z, 0–9, and - . $ / + % or space only.'; return;
+      errEl.textContent = 'Code39: use A–Z, 0–9 and - . $ / + % or space only.'; return;
     }
   }
 
@@ -165,9 +155,7 @@ function clearOutputArea() {
   document.getElementById('output-area').classList.remove('has-output');
 }
 
-// ─────────────────────────────────────────────
-// GENERATE — Download / Copy
-// ─────────────────────────────────────────────
+//GENERATE Download / Copy
 function getOutputCanvas() {
   return new Promise((resolve, reject) => {
     if (currentFormat === 'QR') {
@@ -237,9 +225,7 @@ async function copyCodeImage() {
   }
 }
 
-// ─────────────────────────────────────────────
-// SCAN — Method switching
-// ─────────────────────────────────────────────
+//SCAN Method switching
 function setMethod(method) {
   currentMethod = method;
   stopCamera();
@@ -252,9 +238,7 @@ function setMethod(method) {
   clearResult();
 }
 
-// ─────────────────────────────────────────────
-// SCAN — Camera
-// ─────────────────────────────────────────────
+//SCAN Camera
 function setCameraStatus(state, msg) {
   const dot = document.getElementById('camera-status-dot');
   const txt = document.getElementById('camera-status-text');
@@ -289,7 +273,7 @@ function startCamera() {
       showResult(decodedText, formatName);
       toast('✓ Code detected!');
     },
-    () => { /* scan error per frame — ignored */ }
+    () => { /* scan error per frame ignored */ }
   ).then(() => {
     isCameraActive = true;
     document.getElementById('btn-start-cam').style.display = 'none';
@@ -297,11 +281,11 @@ function startCamera() {
     document.getElementById('btn-start-cam').disabled = false;
     document.getElementById('scan-beam').style.display = 'block';
     document.getElementById('scan-corners').style.display = 'block';
-    setCameraStatus('active', 'scanning — aim at a code');
+    setCameraStatus('active', 'scanning aim at a code');
   }).catch(err => {
     const msg = (typeof err === 'string') ? err : err.message;
     if (msg && msg.includes('Permission')) {
-      setCameraStatus('error', 'camera permission denied — check browser settings');
+      setCameraStatus('error', 'camera permission denied check browser settings');
     } else {
       setCameraStatus('error', 'camera unavailable: ' + (msg || 'unknown error'));
     }
@@ -328,9 +312,7 @@ function stopCamera() {
   }
 }
 
-// ─────────────────────────────────────────────
-// SCAN — Upload
-// ─────────────────────────────────────────────
+//SCAN Upload
 function handleFileUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -396,9 +378,7 @@ tempEl.id = '__temp_scan_el__';
 tempEl.style.cssText = 'display:none;position:absolute;width:1px;height:1px;overflow:hidden;';
 document.body.appendChild(tempEl);
 
-// ─────────────────────────────────────────────
-// SCAN — Paste / URL
-// ─────────────────────────────────────────────
+//SCAN Paste / URL
 function scanFromURL() {
   const url = document.getElementById('paste-url-input').value.trim();
   const errEl = document.getElementById('paste-error');
@@ -470,9 +450,7 @@ document.getElementById('paste-area').addEventListener('paste', async (e) => {
   }
 });
 
-// ─────────────────────────────────────────────
-// DECODE — Interpret what the barcode contains
-// ─────────────────────────────────────────────
+//DECODE Interpret what the barcode contains
 
 /**
  * Heuristic barcode format detection from value content.
@@ -503,7 +481,7 @@ function detectBarcodeFormatFromValue(value) {
 function interpretDecodedValue(raw, format) {
   const v = raw.trim();
 
-  // ── URL ──────────────────────────────────────
+  // URL
   if (/^https?:\/\//i.test(v)) {
     try {
       const url = new URL(v);
@@ -519,7 +497,7 @@ function interpretDecodedValue(raw, format) {
     }
   }
 
-  // ── WiFi ─────────────────────────────────────
+  // WiFi
   if (/^WIFI:/i.test(v)) {
     const extract = (key) => {
       const m = v.match(new RegExp(key + ':([^;]*)', 'i'));
@@ -537,7 +515,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'WiFi Credentials', badge: 'badge-wifi', fields };
   }
 
-  // ── Email (mailto:) ──────────────────────────
+  // Email (mailto:)
   if (/^mailto:/i.test(v)) {
     try {
       const url    = new URL(v);
@@ -555,7 +533,7 @@ function interpretDecodedValue(raw, format) {
     }
   }
 
-  // ── Phone (tel:) ──────────────────────────────
+  // Phone (tel:)
   if (/^tel:/i.test(v)) {
     const number = v.replace(/^tel:/i, '').replace(/[^\d\+\-\(\)\s]/g, '');
     return {
@@ -564,7 +542,7 @@ function interpretDecodedValue(raw, format) {
     };
   }
 
-  // ── SMS ───────────────────────────────────────
+  // SMS
   if (/^sms:|^smsto:/i.test(v)) {
     const parts = v.replace(/^sms:|^smsto:/i, '').split(':');
     const fields = [{ key: 'To', value: parts[0] || '—', highlight: true }];
@@ -572,7 +550,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'SMS Message', badge: 'badge-sms', fields };
   }
 
-  // ── Geo location ────────────────────────────
+  // Geo location
   if (/^geo:/i.test(v)) {
     const coords = v.replace(/^geo:/i, '').split(',');
     const lat = parseFloat(coords[0]);
@@ -588,7 +566,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'Geographic Location', badge: 'badge-geo', fields };
   }
 
-  // ── vCard (Contact) ──────────────────────────
+  // vCard (Contact)
   if (/^BEGIN:VCARD/i.test(v)) {
     const get = (prop) => {
       const m = v.match(new RegExp('^' + prop + '[^:]*:(.+)$', 'im'));
@@ -612,7 +590,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'Contact Card (vCard)', badge: 'badge-contact', fields };
   }
 
-  // ── Calendar Event ───────────────────────────
+  // Calendar Event
   if (/^BEGIN:VEVENT/i.test(v)) {
     const get = (prop) => {
       const m = v.match(new RegExp('^' + prop + '[^:]*:(.+)$', 'im'));
@@ -632,7 +610,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'Calendar Event', badge: 'badge-contact', fields };
   }
 
-  // ── EAN-13 / EAN-8 / UPC-A (retail product) ─
+  // EAN-13 / EAN-8 / UPC-A (retail product) 
   if (/^\d{8}$|^\d{12,13}$/.test(v)) {
     const len = v.length;
     const fmtLabel = len === 8 ? 'EAN-8' : len === 12 ? 'UPC-A' : 'EAN-13';
@@ -659,7 +637,7 @@ function interpretDecodedValue(raw, format) {
     return { type: 'Retail Barcode (' + fmtLabel + ')', badge: 'badge-ean', fields };
   }
 
-  // ── Plain text fallback ──────────────────────
+  // Plain text fallback
   const charCount = v.length;
   const wordCount = v.split(/\s+/).filter(Boolean).length;
   const fields = [{ key: 'Content', value: v, highlight: false }];
@@ -676,7 +654,7 @@ function interpretDecodedValue(raw, format) {
   return { type: 'Plain Text', badge: 'badge-text', fields };
 }
 
-// ── EAN check digit helper ──
+// EAN check digit helper
 function computeEANCheckDigit(payload, isEAN8) {
   let sum = 0;
   for (let i = 0; i < payload.length; i++) {
@@ -687,7 +665,7 @@ function computeEANCheckDigit(payload, isEAN8) {
   return (10 - (sum % 10)) % 10;
 }
 
-// ── GS1 country/region prefix ──
+// GS1 country/region prefix
 function getGS1Prefix(ean13) {
   const p = parseInt(ean13.substring(0, 3));
   const ranges = [
@@ -759,7 +737,7 @@ function getGS1Prefix(ean13) {
   return known[key3] || known[key2] || null;
 }
 
-// ── ICS date formatter ──
+// ICS date formatter
 function formatICSDate(ics) {
   if (!ics || ics.length < 8) return ics;
   const d = ics.replace(/[TZ]/g, '');
@@ -769,9 +747,7 @@ function formatICSDate(ics) {
   return `${y}-${mo}-${dd}`;
 }
 
-// ─────────────────────────────────────────────
-// SCAN — Show / Clear Result
-// ─────────────────────────────────────────────
+//SCAN Show / Clear Result
 function showResult(value, format) {
   lastResult = value;
 
@@ -839,7 +815,7 @@ function fallbackCopy(text) {
   document.body.appendChild(ta);
   ta.focus(); ta.select();
   try { document.execCommand('copy'); toast('✓ Copied!'); }
-  catch { toast('Could not copy — please select and copy manually.'); }
+  catch { toast('Could not copy please select and copy manually.'); }
   document.body.removeChild(ta);
 }
 
@@ -853,9 +829,7 @@ function openResultLink() {
   }
 }
 
-// ─────────────────────────────────────────────
-// UTILITIES
-// ─────────────────────────────────────────────
+//UTILITIES
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')

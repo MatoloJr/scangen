@@ -1,6 +1,4 @@
-/* ─────────────────────────────────────────────
-   RESET & ROOT
-───────────────────────────────────────────── */
+/* RESET & ROOT */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -35,9 +33,7 @@
   --main-max: 860px;
 }
 
-/* ─────────────────────────────────────────────
-   BASE
-───────────────────────────────────────────── */
+/* BASE */
 html { font-size: 16px; }
 
 body {
@@ -53,9 +49,7 @@ body {
 
 img, svg, video { max-width: 100%; display: block; }
 
-/* ─────────────────────────────────────────────
-   HEADER
-───────────────────────────────────────────── */
+/* HEADER */
 .header {
   border-bottom: 1px solid var(--border);
   padding: 1rem var(--main-padding);
@@ -121,9 +115,7 @@ img, svg, video { max-width: 100%; display: block; }
 /* Hide badge on very small screens */
 @media (max-width: 380px) { .header-badge { display: none; } }
 
-/* ─────────────────────────────────────────────
-   TABS
-───────────────────────────────────────────── */
+/* TABS */
 .tabs {
   display: flex;
   border-bottom: 1px solid var(--border);
@@ -166,9 +158,7 @@ img, svg, video { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 
-/* ─────────────────────────────────────────────
-   MAIN LAYOUT
-───────────────────────────────────────────── */
+/* MAIN LAYOUT */
 .main {
   padding: var(--space-xl) var(--main-padding);
   max-width: var(--main-max);
@@ -179,9 +169,7 @@ img, svg, video { max-width: 100%; display: block; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* ─────────────────────────────────────────────
-   SECTION LABEL
-───────────────────────────────────────────── */
+/* SECTION LABEL */
 .section-label {
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -191,9 +179,7 @@ img, svg, video { max-width: 100%; display: block; }
   margin-bottom: 0.75rem;
 }
 
-/* ─────────────────────────────────────────────
-   CARD
-───────────────────────────────────────────── */
+/* CARD */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -222,9 +208,7 @@ img, svg, video { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 
-/* ─────────────────────────────────────────────
-   FORM ELEMENTS
-───────────────────────────────────────────── */
+/* FORM ELEMENTS */
 input[type="text"], textarea, select {
   width: 100%;
   background: var(--surface);
@@ -271,9 +255,7 @@ textarea { resize: vertical; min-height: 72px; }
   margin-bottom: 0.35rem;
 }
 
-/* ─────────────────────────────────────────────
-   BUTTONS
-───────────────────────────────────────────── */
+/* BUTTONS */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -323,9 +305,7 @@ textarea { resize: vertical; min-height: 72px; }
   .btn-group .btn { width: 100%; }
 }
 
-/* ─────────────────────────────────────────────
-   FORMAT PILLS
-───────────────────────────────────────────── */
+/* FORMAT PILLS */
 .format-pills {
   display: flex;
   flex-wrap: wrap;
@@ -351,9 +331,7 @@ textarea { resize: vertical; min-height: 72px; }
 .format-pill:hover { border-color: var(--cyan); color: var(--text); }
 .format-pill.active { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
 
-/* ─────────────────────────────────────────────
-   OUTPUT AREA
-───────────────────────────────────────────── */
+/* OUTPUT AREA */
 .output-area {
   background: var(--surface);
   border: 1px dashed var(--border);
@@ -409,9 +387,7 @@ textarea { resize: vertical; min-height: 72px; }
   display: block;
 }
 
-/* ─────────────────────────────────────────────
-   SCAN METHODS GRID
-───────────────────────────────────────────── */
+/* SCAN METHODS GRID */
 .scan-methods {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -461,9 +437,7 @@ textarea { resize: vertical; min-height: 72px; }
 .scan-method-btn.active { border-color: var(--cyan); background: var(--cyan-dim); color: var(--cyan); }
 .scan-method-btn .method-icon { font-size: 1.5rem; line-height: 1; }
 
-/* ─────────────────────────────────────────────
-   CAMERA VIEWPORT
-───────────────────────────────────────────── */
+/* CAMERA VIEWPORT */
 .camera-container {
   position: relative;
   border-radius: 12px;
@@ -536,9 +510,7 @@ textarea { resize: vertical; min-height: 72px; }
 .scan-corners span::before { bottom:0; left:0; border-width: 0 0 2px 2px; }
 .scan-corners span::after  { bottom:0; right:0; border-width: 0 2px 2px 0; }
 
-/* ─────────────────────────────────────────────
-   SCAN RESULT BOX
-───────────────────────────────────────────── */
+/* SCAN RESULT BOX */
 .result-box {
   background: var(--green-dim);
   border: 1px solid rgba(0,255,135,0.25);
@@ -612,9 +584,7 @@ textarea { resize: vertical; min-height: 72px; }
 }
 .interp-val.highlight { color: var(--cyan); }
 
-/* ─────────────────────────────────────────────
-   DROP ZONE
-───────────────────────────────────────────── */
+/* DROP ZONE */
 .drop-zone {
   border: 2px dashed var(--border);
   border-radius: 12px;
@@ -652,9 +622,7 @@ textarea { resize: vertical; min-height: 72px; }
   margin-top: 0.35rem;
 }
 
-/* ─────────────────────────────────────────────
-   PASTE / URL AREA
-───────────────────────────────────────────── */
+/* PASTE / URL AREA */
 .paste-area {
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -679,9 +647,7 @@ kbd {
   font-family: var(--mono);
 }
 
-/* ─────────────────────────────────────────────
-   TOAST
-───────────────────────────────────────────── */
+/* TOAST */
 .toast {
   position: fixed;
   bottom: clamp(1rem, 4vw, 1.5rem);
@@ -712,9 +678,7 @@ kbd {
 }
 .toast.show { transform: translateY(0); opacity: 1; }
 
-/* ─────────────────────────────────────────────
-   STATUS INDICATOR
-───────────────────────────────────────────── */
+/* STATUS INDICATOR */
 .status-dot {
   display: inline-block;
   width: 6px;
@@ -728,9 +692,7 @@ kbd {
 .status-dot.active { background: var(--green); box-shadow: 0 0 6px var(--green); }
 .status-dot.error  { background: var(--red); box-shadow: 0 0 6px var(--red); }
 
-/* ─────────────────────────────────────────────
-   SIZE / RANGE CONTROLS
-───────────────────────────────────────────── */
+/* SIZE / RANGE CONTROLS */
 .size-control {
   display: flex;
   align-items: center;
@@ -755,9 +717,7 @@ kbd {
   flex-shrink: 0;
 }
 
-/* ─────────────────────────────────────────────
-   UTILITY
-───────────────────────────────────────────── */
+/* UTILITY */
 #upload-input { display: none; }
 
 .error-msg {

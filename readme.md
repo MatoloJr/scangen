@@ -51,14 +51,14 @@ No server. No uploads. No accounts. Just open and use.
 
 ## Overview
 
-ScanGen is a lightweight, zero-dependency web tool that lets you **scan** and **generate** barcodes and QR codes entirely in the browser. Everything runs locally — no data ever leaves your device.
+ScanGen is a lightweight, zero-dependency web tool that lets you **scan** and **generate** barcodes and QR codes entirely in the browser. Everything runs locally no data ever leaves your device.
 
 It was built to be:
 
-- **Fast** — no build step, no framework, instant load
-- **Private** — 100% client-side, no analytics, no tracking
-- **Portable** — a single folder of three files, works anywhere
-- **Informative** — doesn't just spit out raw data; it interprets what codes *mean*
+- **Fast** no build step, no framework, instant load
+- **Private** 100% client-side, no analytics, no tracking
+- **Portable** a single folder of three files, works anywhere
+- **Informative** doesn't just spit out raw data; it interprets what codes *mean*
 
 ---
 
@@ -67,10 +67,10 @@ It was built to be:
 ### Scanner
 - 📷 **Live camera scanning** with animated beam overlay and corner brackets
 - 🖼 **Image upload** with drag-and-drop support and image preview
-- 📋 **Clipboard paste** — paste a copied image directly with `Ctrl+V` / `⌘V`
-- 🔗 **URL scanning** — load and scan a barcode image from a public URL
+- 📋 **Clipboard paste** paste a copied image directly with `Ctrl+V` / `⌘V`
+- 🔗 **URL scanning** load and scan a barcode image from a public URL
 - ✅ **Automatic format detection** for scanned results
-- 🧠 **Smart interpretation** — decodes what the barcode *contains* (see below)
+- 🧠 **Smart interpretation** decodes what the barcode *contains* (see below)
 
 ### Generator
 - **QR Code** with configurable error correction (L / M / Q / H) and size
@@ -80,12 +80,12 @@ It was built to be:
 - **Code39** with character-set validation
 - ⬇ **Download as PNG** (2× resolution for crisp printing)
 - 📋 **Copy image to clipboard**
-- ⚡ **Live preview** — regenerates automatically as you type (debounced)
+- ⚡ **Live preview** regenerates automatically as you type (debounced)
 
 ### General
 - 🌑 Dark terminal-inspired UI
-- 📱 Fully responsive — works on any screen from 320px to 4K
-- ♿ Accessible — ARIA roles, labels, live regions, and keyboard navigation
+- 📱 Fully responsive works on any screen from 320px to 4K
+- ♿ Accessible ARIA roles, labels, live regions and keyboard navigation
 - 🔔 Non-intrusive toast notifications
 - ❌ No server, no backend, no sign-up
 
@@ -103,7 +103,7 @@ It was built to be:
 
 ## Getting Started
 
-### Option 1 — Open directly (no setup required)
+### Option 1 Open directly (no setup required)
 
 ```bash
 git clone https://github.com/MatoloJr/scangen.git
@@ -114,7 +114,7 @@ Then open `index.html` in your browser.
 
 > **Note:** Live camera scanning requires a secure context (HTTPS or `localhost`). If you open the file directly via `file://`, camera access will be blocked by the browser. Use the upload or paste methods instead, or serve it locally.
 
-### Option 2 — Local development server
+### Option 2 Local development server
 
 Using Python (no install needed on most systems):
 
@@ -138,7 +138,7 @@ npx http-server . -p 5500
 
 Using VS Code: install the **Live Server** extension, right-click `index.html` → **Open with Live Server**.
 
-### Option 3 — Deploy to the web
+### Option 3 Deploy to the web
 
 Since ScanGen is purely static HTML/CSS/JS, you can host it on:
 
@@ -162,7 +162,7 @@ ScanGen offers three input methods, selectable via the tab buttons in the Scan p
 1. Click **▶ Start Scanner**
 2. Allow camera permission when prompted by the browser
 3. Aim your camera at any barcode or QR code
-4. ScanGen detects and decodes it automatically — no button press needed
+4. ScanGen detects and decodes it automatically no button press needed
 5. The result appears below with full interpretation
 6. Click **■ Stop** to release the camera
 
@@ -211,9 +211,9 @@ ScanGen offers three input methods, selectable via the tab buttons in the Scan p
 |---|---|
 | QR Code | Any text up to ~4,000 characters. URLs, WiFi, contacts all work. |
 | Code128 | Any printable ASCII character. No length limit for the tool. |
-| EAN-13 | Enter exactly 12 digits — the 13th check digit is computed automatically by JsBarcode. Or enter all 13. |
+| EAN-13 | Enter exactly 12 digits the 13th check digit is computed automatically by JsBarcode. Or enter all 13. |
 | EAN-8 | Enter exactly 7 or 8 digits. |
-| Code39 | Uppercase A–Z, digits 0–9, and these special characters: `- . $ / + % SPACE`. Lowercase is auto-uppercased. |
+| Code39 | Uppercase A–Z, digits 0–9 and these special characters: `- . $ / + % SPACE`. Lowercase is auto-uppercased. |
 
 ---
 
@@ -223,7 +223,7 @@ When a code is scanned, ScanGen does more than show you raw text. The **interpre
 
 | Raw value detected | What ScanGen shows |
 |---|---|
-| `https://example.com/path?q=1` | Domain, protocol, path, query string — plus an **Open Link** button |
+| `https://example.com/path?q=1` | Domain, protocol, path, query string plus an **Open Link** button |
 | `WIFI:T:WPA;S:MyNetwork;P:hunter2;;` | Network name (SSID), security type (WPA/WPA2/WEP), password |
 | `mailto:hello@example.com?subject=Hi` | Recipient, subject line, body preview |
 | `tel:+254700000000` | Formatted phone number |
@@ -334,18 +334,18 @@ For EAN-13 codes, ScanGen includes a built-in GS1 prefix lookup table covering 1
 ```
 scangen/
 ├── index.html      # Markup, layout, ARIA roles, CDN script tags
-├── style.css       # All styling — variables, responsive grid, animations
-├── script.js       # All logic — scanner, generator, interpreter
+├── style.css       # All styling variables, responsive grid, animations
+├── script.js       # All logic scanner, generator, interpreter
 └── README.md       # This file
 ```
 
-The project is intentionally kept as three plain files with zero build tooling, so anyone can read, fork, and modify it without setup.
+The project is intentionally kept as three plain files with zero build tooling, so anyone can read, fork and modify it without setup.
 
 ---
 
 ## Libraries Used
 
-All libraries are loaded from CDN — no npm, no bundler.
+All libraries are loaded from CDN no npm, no bundler.
 
 | Library | Version | Purpose | CDN |
 |---|---|---|---|
@@ -388,7 +388,7 @@ ScanGen is built mobile-first with fluid layouts that adapt seamlessly to any sc
 | `860px+` | Content capped at max-width, centred |
 
 Key responsive techniques used:
-- `clamp()` for fluid font sizes, padding, and spacing
+- `clamp()` for fluid font sizes, padding and spacing
 - CSS Grid with responsive `grid-template-columns`
 - `aspect-ratio: 4/3` on the camera viewport with `@supports` fallback
 - `min-height: 100dvh` for correct viewport height on mobile browsers
@@ -427,7 +427,7 @@ Contributions are welcome! Here's how:
 
 1. **Fork** the repository
 2. **Create** a feature branch: `git checkout -b feature/my-feature`
-3. **Make** your changes — keep it to the three plain files unless there's a strong reason to add more
+3. **Make** your changes keep it to the three plain files unless there's a strong reason to add more
 4. **Test** in at least Chrome and Firefox, on desktop and mobile
 5. **Commit**: `git commit -m "feat: add my feature"`
 6. **Push**: `git push origin feature/my-feature`
@@ -445,8 +445,8 @@ Contributions are welcome! Here's how:
 
 ### Code style
 
-- Vanilla JS only — no frameworks, no TypeScript
-- Keep `index.html`, `style.css`, and `script.js` as the only source files
+- Vanilla JS only no frameworks, no TypeScript
+- Keep `index.html`, `style.css` and `script.js` as the only source files
 - Comment non-obvious logic clearly
 - Follow the existing naming conventions (camelCase functions, kebab-case CSS classes)
 
@@ -474,8 +474,8 @@ Copyright (c) 2026 Emmanuel Matolo
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
+to use, copy, modify, merge, publish, distribute, sublicense and/or sell
+copies of the Software and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
